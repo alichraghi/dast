@@ -7,6 +7,9 @@ test "slice()" {
 
     try testing.expectEqualStrings("hell", try dast.slice(u8, arr, 0, 4));
     try testing.expectEqualStrings("hello", try dast.slice(u8, arr, 0, null));
+    try testing.expectEqualStrings("o", try dast.slice(u8, arr, 4, 5));
+    try testing.expectEqualStrings("", try dast.slice(u8, arr, 5, 5));
+    try testing.expectEqualStrings("", try dast.slice(u8, arr, 6, 7));
 }
 
 test "rm()" {
@@ -34,6 +37,8 @@ test "chunk()" {
         var chunked = try dast.chunk(u8, testing.allocator, "abc", 1);
 
         try testing.expectEqualStrings("a", chunked[0]);
+        try testing.expectEqualStrings("b", chunked[1]);
+        try testing.expectEqualStrings("c", chunked[2]);
         testing.allocator.free(chunked);
     }
     {
