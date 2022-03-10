@@ -5,7 +5,7 @@ const mem = std.mem;
 /// groups an array of elements with the length of `size`.
 /// if `arr` can't be split, then chunks the remaining elements.
 ///
-/// ```zig
+/// ```
 /// const out = try dast.chunk(u8, allocator, "abcd", 2); // -> {{a, b}, {c, d}}
 /// defer allocator.free(chunked);
 /// ```

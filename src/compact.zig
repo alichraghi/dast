@@ -4,7 +4,7 @@ const mem = std.mem;
 
 /// creates an array without zero (`0x0`) values  
 ///
-/// ```zig
+/// ```
 /// const arr = &[_]usize{ 1, 0, 2, 3, 0 };
 /// const out = try compact(usize, allocator, arr); // -> {1, 2, 3}
 /// defer allocator.free(out);

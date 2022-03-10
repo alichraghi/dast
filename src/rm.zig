@@ -1,7 +1,7 @@
 /// removes an element at `index` from `arr` and then splice the right side elements
 /// the remaining items will be initialized to zero (`0x0`)
 ///
-/// ```zig
+/// ```
 /// var arr = "good".*;
 /// dast.rm(&arr, 1); // -> {g, o, d, 0x0}
 /// ```

@@ -7,7 +7,7 @@ const Error = error{InvalidIndex};
 ///
 /// **NOTE:** if `start` or `end` be larger than array length, so will be replaced with `arr.len`
 ///
-/// ```zig
+/// ```
 /// const arr = "hello";
 /// try testing.expectEqualStrings("hell", try dast.slice(u8, arr, 0, 4));
 /// ```
