@@ -7,16 +7,16 @@ const mem = std.mem;
 ///
 /// ```
 /// const out = try dast.chunk(u8, allocator, "abcd", 2); // -> {{a, b}, {c, d}}
-/// defer allocator.free(chunked);
+/// defer allocator.free(out);
 /// ```
 pub fn chunk(comptime T: type, allocator: mem.Allocator, arr: []const T, size: usize) ![][]const T {
     if (arr.len == 0 or size == 0) return &[_][]const T{};
 
-    var index: usize = 0;
+    var i: usize = 0;
     var result = std.ArrayList([]const T).init(allocator);
 
-    while (index < arr.len) : (index += size) {
-        try result.append(try dast.slice(T, arr, index, index + size));
+    while (i < arr.len) : (i += size) {
+        try result.append(try dast.slice(T, arr, i, i + size));
     }
 
     return result.toOwnedSlice();
