@@ -5,7 +5,7 @@ const Error = error{InvalidIndex};
 
 /// a safer wrapper for slice picking syntax (`arr[1..3]`), that return errors instead of runtime panics such as *`index out of bounds`*.
 ///
-/// **NOTE:** if `start` or `end` be larger than array length they will be replaced with `arr.len`
+/// **NOTE:** if `start` or `end` be larger than array length, so will be replaced with `arr.len`
 ///
 /// ```zig
 /// const arr = "hello";

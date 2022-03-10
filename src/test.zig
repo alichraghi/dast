@@ -13,40 +13,61 @@ test "slice()" {
 }
 
 test "rm()" {
-    var arr = "good".*;
+    {
+        var arr = "good".*;
 
-    dast.rm(&arr, 1);
-    try testing.expectEqualStrings("god", arr[0..3]);
+        dast.rm(&arr, 1);
+        try testing.expectEqualStrings("god", arr[0..3]);
+    }
+    {
+        var arr = [_]u8{ 0, 1, 2, 0, 3, 0 };
+        dast.rm(&arr, 0);
+        dast.rm(&arr, 2);
+        try testing.expectEqualStrings(&[_]u8{ 1, 2, 3 }, arr[0..3]);
+    }
 }
 
-test "compactFixed()" {
-    var arr = [_]u8{ 4, 3, 0, 1, 0 };
-    const out = try dast.compactFixed(u8, &arr);
-    try testing.expectEqualStrings(&[_]u8{ 4, 3, 1 }, out);
+test "compact()" {
+    const arr = &[_]u8{ 0, 1, 2, 0, 3, 0, 0 };
+    const out = try dast.compact(u8, testing.allocator, arr);
+    try testing.expectEqualSlices(u8, &[_]u8{ 1, 2, 3 }, out);
+    testing.allocator.free(out);
 }
 
 test "chunk()" {
     {
         // {}
-        const chunked = try dast.chunk(u8, testing.allocator, "abc", 0);
+        const out = try dast.chunk(u8, testing.allocator, "abc", 0);
 
-        try testing.expect(chunked.len == 0);
+        try testing.expect(out.len == 0);
     }
     {
         // { { a }, { b }, { c } }
-        var chunked = try dast.chunk(u8, testing.allocator, "abc", 1);
+        var out = try dast.chunk(u8, testing.allocator, "abc", 1);
 
-        try testing.expectEqualStrings("a", chunked[0]);
-        try testing.expectEqualStrings("b", chunked[1]);
-        try testing.expectEqualStrings("c", chunked[2]);
-        testing.allocator.free(chunked);
+        try testing.expectEqualStrings("a", out[0]);
+        try testing.expectEqualStrings("b", out[1]);
+        try testing.expectEqualStrings("c", out[2]);
+        testing.allocator.free(out);
     }
     {
         // { { a, b }, { c } }
-        var chunked = try dast.chunk(u8, testing.allocator, "abc", 2);
+        var out = try dast.chunk(u8, testing.allocator, "abc", 2);
 
-        try testing.expectEqualStrings("ab", chunked[0]);
-        try testing.expectEqualStrings("c", chunked[1]);
-        testing.allocator.free(chunked);
+        try testing.expectEqualStrings("ab", out[0]);
+        try testing.expectEqualStrings("c", out[1]);
+        testing.allocator.free(out);
     }
+}
+
+test "filter()" {
+    const predFn = struct {
+        fn call(el: u8, _: usize) bool {
+            return el > 2;
+        }
+    }.call;
+    const arr = &[_]u8{ 1, 2, 3, 4 };
+    const out = try dast.filter(u8, std.testing.allocator, arr, predFn);
+    try testing.expectEqualSlices(u8, &[_]u8{ 3, 4 }, out);
+    testing.allocator.free(out);
 }
