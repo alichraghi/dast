@@ -1,8 +1,7 @@
 const std = @import("std");
-const dast = @import("main.zig");
 const mem = std.mem;
 
-/// returns an array of all predicated elements
+/// returns an array of predicated elements
 ///
 /// ```
 /// // predicate

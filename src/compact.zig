@@ -1,5 +1,4 @@
 const std = @import("std");
-const dast = @import("main.zig");
 const mem = std.mem;
 
 /// creates an array without zero (`0x0`) values  

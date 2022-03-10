@@ -12,6 +12,12 @@ test "slice()" {
     try testing.expectEqualStrings("", try dast.slice(u8, arr, 6, 7));
 }
 
+test "includes()" {
+    const arr = &[_]u8{ 1, 2, 3 };
+    try testing.expect(dast.includes(u8, arr, 2));
+    try testing.expect(!dast.includes(u8, arr, 0));
+}
+
 test "rm()" {
     {
         var arr = "good".*;
