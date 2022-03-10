@@ -18,6 +18,14 @@ test "includes()" {
     try testing.expect(!dast.includes(u8, arr, 0));
 }
 
+test "diff()" {
+    const arr1 = &[_]u8{ 1, 2, 3 };
+    const arr2 = &[_]u8{ 2, 3, 4 };
+    const out = (try dast.diff(u8, testing.allocator, arr1, arr2)).?;
+    try testing.expectEqualStrings(out, &[_]u8{ 1, 4 });
+    testing.allocator.free(out);
+}
+
 test "rm()" {
     {
         var arr = "good".*;
