@@ -1,10 +1,8 @@
-# dast
+# Dast
 
-### a Zig utility library inspired by lodash
+### A Zig utility library inspired by [lodash](https://github.com/lodash/lodash)
 
 currently including 7 function:
-
-```s
 - filter
 - chunk
 - compact
@@ -12,7 +10,6 @@ currently including 7 function:
 - includes
 - rm
 - slice
-```
 
 ### _Note! limited functionality_
 
